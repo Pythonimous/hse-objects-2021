@@ -64,7 +64,7 @@ class SmallLinear(nn.Module):
         return self.fc(x)
 
 
-def init_pretrained_model(model_name, output_dim, feature_extract, use_pretrained=True):
+def init_pretrained_model(model_name, output_dim, feature_extract, use_pretrained=True, extract_features=False):
     # Initialize these variables which will be set in this if statement. Each of these
     #   variables is model specific.
     model_ft = None
@@ -75,8 +75,12 @@ def init_pretrained_model(model_name, output_dim, feature_extract, use_pretraine
         """
         model_ft = models.alexnet(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
-        num_ftrs = model_ft.classifier[6].in_features
-        model_ft.classifier[6] = nn.Linear(num_ftrs, output_dim)
+        if extract_features:
+            new_classifier = nn.Sequential(*list(model_ft.classifier.children())[:-2])
+            model_ft.classifier = new_classifier
+        else:
+            num_ftrs = model_ft.classifier[6].in_features
+            model_ft.classifier[6] = nn.Linear(num_ftrs, output_dim)
         input_size = 224
 
     elif model_name == "vgg":
@@ -84,8 +88,11 @@ def init_pretrained_model(model_name, output_dim, feature_extract, use_pretraine
         """
         model_ft = models.vgg11_bn(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
-        num_ftrs = model_ft.classifier[6].in_features
-        model_ft.classifier[6] = nn.Linear(num_ftrs, output_dim)
+        if extract_features:
+            model_ft.classifier = model_ft.classifier[:-3]
+        else:
+            num_ftrs = model_ft.classifier[6].in_features
+            model_ft.classifier[6] = nn.Linear(num_ftrs, output_dim)
         input_size = 224
 
     elif model_name == "resnet":
@@ -93,8 +100,12 @@ def init_pretrained_model(model_name, output_dim, feature_extract, use_pretraine
         """
         model_ft = models.resnet18(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
-        num_ftrs = model_ft.fc.in_features
-        model_ft.fc = nn.Linear(num_ftrs, output_dim)
+        if extract_features:
+            modules = list(model_ft.children())[:-1]
+            model_ft = nn.Sequential(*modules)
+        else:
+            num_ftrs = model_ft.fc.in_features
+            model_ft.fc = nn.Linear(num_ftrs, output_dim)
         input_size = 224
 
     elif model_name == "densenet":
@@ -102,8 +113,11 @@ def init_pretrained_model(model_name, output_dim, feature_extract, use_pretraine
         """
         model_ft = models.densenet121(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
-        num_ftrs = model_ft.classifier.in_features
-        model_ft.classifier = nn.Linear(num_ftrs, output_dim)
+        if extract_features:
+            model_ft.classifier = nn.Identity()
+        else:
+            num_ftrs = model_ft.classifier.in_features
+            model_ft.classifier = nn.Linear(num_ftrs, output_dim)
         input_size = 224
 
     elif model_name == "custom":
