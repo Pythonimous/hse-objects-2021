@@ -64,7 +64,7 @@ class SmallLinear(nn.Module):
         return self.fc(x)
 
 
-def init_pretrained_model(model_name, output_dim, feature_extract, use_pretrained=True, extract_features=False):
+def init_pretrained_model(model_name, output_dim, feature_extract, use_pretrained=True, do_vectorize=False):
     # Initialize these variables which will be set in this if statement. Each of these
     #   variables is model specific.
     model_ft = None
@@ -75,7 +75,7 @@ def init_pretrained_model(model_name, output_dim, feature_extract, use_pretraine
         """
         model_ft = models.alexnet(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
-        if extract_features:
+        if do_vectorize:
             new_classifier = nn.Sequential(*list(model_ft.classifier.children())[:-2])
             model_ft.classifier = new_classifier
         else:
@@ -88,7 +88,7 @@ def init_pretrained_model(model_name, output_dim, feature_extract, use_pretraine
         """
         model_ft = models.vgg11_bn(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
-        if extract_features:
+        if do_vectorize:
             model_ft.classifier = model_ft.classifier[:-3]
         else:
             num_ftrs = model_ft.classifier[6].in_features
@@ -100,7 +100,7 @@ def init_pretrained_model(model_name, output_dim, feature_extract, use_pretraine
         """
         model_ft = models.resnet18(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
-        if extract_features:
+        if do_vectorize:
             modules = list(model_ft.children())[:-1]
             model_ft = nn.Sequential(*modules)
         else:
@@ -113,7 +113,7 @@ def init_pretrained_model(model_name, output_dim, feature_extract, use_pretraine
         """
         model_ft = models.densenet121(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
-        if extract_features:
+        if do_vectorize:
             model_ft.classifier = nn.Identity()
         else:
             num_ftrs = model_ft.classifier.in_features
