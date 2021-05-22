@@ -1,0 +1,25 @@
+{
+  "__comment": "business/restaurant, is_business: TRUE if it is a business, FALSE if it is a restaurant",
+  "lightning": {
+    "__comment": "output_dim 2 for business / restaurant, 6 for ambience; class weights [1.0, 1.0]",
+    "model_name": "densenet",
+    "photo_dir": "data/photos",
+    "csv_path": "data/business_ambience.csv",
+    "output_dim": 6,
+    "batch_size": 512,
+    "num_workers": 4,
+    "learning_rate": 0.02,
+    "max_epochs": 20,
+    "feature_extract": true,
+    "use_pretrained": true,
+    "multilabel": true,
+    "threshold": 0.5,
+    "class_weight": [3.513, 1.63, 6.084, 9.839, 6.502, 4.625]
+  },
+  "sklearn": {
+    "br_data_path": "data/business_restaurant.csv",
+    "amb_data_path": "data/business_ambience.csv",
+    "trf_feats_path": "data/densenet_features.npz",
+    "obj_feats_path": "data/img_objects.pickle"
+  }
+}
