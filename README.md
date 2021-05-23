@@ -38,12 +38,12 @@ pip3 install -r requirements.txt
 ```sh
 ./scripts/download_svc.sh
 ```
-##### Результаты для топ классификаторов на комбинированных векторах transfer + confidence + count:
+## Результаты для традиционных классификаторов на комбинированных векторах transfer + confidence + count:
 
-| | Логистическая регрессия | SVC |
-| ------ | ------ | ------ |
-| **Business / Restaurant** | Acc. 69.98%;  F1 0.7130 | **Acc. 72.72%; F1 0.7446** |
-| **Ambience** | **Jaccard Coef: 0.3582; Hamming Loss: 0.3063; F1: 0.4249; ROC: 0.6742.** | Дольше 2.5 ч. |
+| | Logistic Regression | NB Classifier | SVC | Случайный лес |
+| ------ | ------ | ------ | ------ | ------ |
+| **Business / Restaurant** | Acc. 69.98%;<br>F1 0.7130 | Acc. 63.34%;<br>F1 0.6533 | **Acc. 72.72%;<br>F1 0.7446** | Acc. 69.38%;<br>F1 0.7176 |
+| **Ambience** | **Jaccard Coef: 0.3582;<br>Hamming Loss: 0.3063;<br>F1: 0.4249;<br>ROC: 0.6742.** | Jaccard Coef: 0.2589;<br>Hamming Loss: 0.4047;<br>F1: 0.3463;<br>ROC: 0.6027. | Дольше 2.5 ч. | Jaccard Coef: 0.0747;<br>Hamming Loss: 0.1832;<br>F1: 0.0657;<br>ROC: 0.5154. |
 
    [yelp]: <https://www.yelp.com/dataset/>
     
