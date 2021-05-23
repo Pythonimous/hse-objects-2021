@@ -3,6 +3,7 @@ from sklearn.metrics import classification_report, jaccard_score, hamming_loss, 
 
 
 def multiclass_stats(y_true, y_pred):
+    """Given y_true and y_pred, returns basic multilabel classification metrics"""
     stats = {
     'jaccard_score': jaccard_score(y_true, y_pred, average='samples'),
     'hamming_loss': hamming_loss(y_true, y_pred),

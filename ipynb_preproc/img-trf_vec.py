@@ -31,8 +31,7 @@ def set_parameter_requires_grad(model, feature_extracting):
 
 
 def initialize_model(model_name, feature_extract, use_pretrained=True):
-    # Initialize these variables which will be set in this if statement. Each of these
-    #   variables is model specific.
+    
     model_ft = None
     input_size = 0
 
@@ -61,14 +60,6 @@ def initialize_model(model_name, feature_extract, use_pretrained=True):
         model_ft = models.vgg11_bn(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
         model_ft.classifier = model_ft.classifier[:-3]
-        input_size = 224
-
-    elif model_name == "squeezenet":
-        """ Squeezenet
-        """
-        model_ft = models.squeezenet1_0(pretrained=use_pretrained)
-        set_parameter_requires_grad(model_ft, feature_extract)
-        model_ft.classifier = model_ft.classifier[:-2]
         input_size = 224
 
     elif model_name == "densenet":
@@ -151,5 +142,5 @@ def extract_trf_features(model_name):
     np.savez(f'yelp_data/transfer_features/{model_name}_features.npz', feat_dict)
 
 
-for model_name in ['alexnet', 'vgg', 'squeezenet', 'densenet']:
+for model_name in ['alexnet', 'vgg', 'resnet', 'densenet']:
     extract_trf_features(model_name)
