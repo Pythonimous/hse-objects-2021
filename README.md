@@ -1,44 +1,44 @@
 # hse-objects-2021
-## Материалы выпускной квалификационной работы Николаева Кирилла, 19ИАД.
+## Master's Thesis Repository
 
-### _Тема выпускной квалификационной работы_:
-#### Алгоритмы классификации изображений на основе нейросетевых детекторов объектов и структурного распознавания образов.
+### _Thesis_:
+#### Image Classification Algorithms based on Object Detection and Structural Pattern Recognition.
 
-## Содержимое проекта:
+## Contents:
 
-- [**data**][dat]: csv файлы для обеих задач
-- [**example_photos**][exP]: примеры изображений для demo.ipynb
-- [**imports**][imp]: модели, загрузчики данных и основные метрики проекта
-- [**ipynb_preproc**][prep]: файлы, использовавшиеся для предобработки в Kaggle / Colab / локально
-- [**ipynb_training**][train]: файлы, использовавшиеся для обучения в Kaggle / Colab (pytorch) / локально (sklearn)
-- [**pretrained_models**][pretr]: предобученные sklearn модели логистической регрессии для demo.ipynb
-- [**scripts**][scr]: скрипты для загрузки доп файлов с Google Drive (опционально):
-  - [***download_features.sh***][dF]: скрипт для загрузки и распаковки transfer / объектных признаков;
-  - [***download_photos.sh***][dP]: скрипт для загрузки и распаковки изображений.
-    > Только изображения, встречающиеся хотя бы в одной из задач.
-    > Весь датасет можно скачать [здесь][yelp].
-  - [***download_svc.sh***][dS]: скрипт для загрузки Support Vector Classifier.
-    > Для business / restaurant классификации, поскольку логистическая регрессия не топ-метод.
-- [***config.json***][conf]: все конфигурации, собранные в одном месте. пути к изображениям, датасетам, гиперпараметры и проч. изменяются здесь.
-- [***demo.ipynb***][demo]: иллюстрированная демонстрация пайплайна со всеми этапами. Можно как использовать примеры из [**example_photos**][exP], так и загружать свои.
+- [**data**][dat]: csv files for both tasks
+- [**example_photos**][exP]: image examples for demo.ipynb
+- [**imports**][imp]: models, data loaders and primary project metrics
+- [**ipynb_preproc**][prep]: Kaggle / Colab / local preprocessing files
+- [**ipynb_training**][train]: Kaggle / Colab (pytorch) / local (sklearn) training files
+- [**pretrained_models**][pretr]: pretrained sklearn logistic regression models for demo.ipynb
+- [**scripts**][scr]: download additional files from Google drive (optional):
+  - [***download_features.sh***][dF]: download and unpack transfer / object features;
+  - [***download_photos.sh***][dP]: download and unpack images.
+    > Only images used in at least one of the tasks.
+    > The whole dataset is available [here][yelp].
+  - [***download_svc.sh***][dS]: Support Vector Classifier download script.
+    > For business / restaurant classification only, since logistic regression is not a top method.
+- [***config.json***][conf]: Image, Data, Hyperparameter, etc. paths are changed here.
+- [***demo.ipynb***][demo]: Illustrated pipeline demo. You can either use the examples from [**example_photos**][exP], or upload your own.
 
-### Для установки необходимых python-библиотек:
+### To install the preprequisites:
 ```
 pip3 install -r requirements.txt
 ```
-### Для загрузки и распаковки изображений с Google Drive:
+### To download and unpack Google Drive images:
 ```sh
 ./scripts/download_photos.sh
 ```
-### Для загрузки и распаковки transfer / объектных признаков с Google Drive:
+### To download and unzip object features:
 ```sh
 ./scripts/download_features.sh
 ```
-### Для загрузки предобученного Support Vector Classifier с Google Drive:
+### To download the pretrained Support Vector Classifier:
 ```sh
 ./scripts/download_svc.sh
 ```
-## Результаты для традиционных классификаторов на комбинированных векторах transfer + confidence + count:
+## Results for classical models on combined transfer + confidence + count vectors:
 
 | | Logistic Regression | NB Classifier | SVC | Случайный лес |
 | ------ | ------ | ------ | ------ | ------ |
